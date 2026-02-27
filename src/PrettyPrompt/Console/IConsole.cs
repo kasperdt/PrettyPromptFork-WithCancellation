@@ -4,9 +4,10 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 #endregion
 
+using PrettyPrompt.Highlighting;
 using System;
 using System.Text;
-using PrettyPrompt.Highlighting;
+using System.Threading;
 using TextCopy;
 
 namespace PrettyPrompt.Consoles;

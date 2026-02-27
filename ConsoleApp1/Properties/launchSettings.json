@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Dev": {
+      "commandName": "Project",
+      "commandLineArgs": "--fun 10",
+      "environmentVariables": {
+        "DOTNET_environment": "Developement"
+      }
+    }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json"
+}

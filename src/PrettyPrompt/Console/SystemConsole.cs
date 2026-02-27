@@ -6,6 +6,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace PrettyPrompt.Consoles;
 
@@ -14,6 +15,7 @@ namespace PrettyPrompt.Consoles;
 /// </summary>
 public class SystemConsole : IConsole
 {
+    public CancellationTokenSource ReadKeyCancellationTokenSource { get; set; } = new CancellationTokenSource();
     public int CursorTop => Console.CursorTop;
     public int BufferWidth => Console.BufferWidth;
     public int WindowHeight => Console.WindowHeight;
@@ -41,6 +43,7 @@ public class SystemConsole : IConsole
         get => Console.TreatControlCAsInput;
         set => Console.TreatControlCAsInput = value;
     }
+    
 
     public event ConsoleCancelEventHandler CancelKeyPress
     {

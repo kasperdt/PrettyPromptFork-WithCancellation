@@ -149,9 +149,9 @@ internal class CodePane : IKeyPressHandler
 
         switch (key.ObjectPattern)
         {
-            case (Control, C) when selection is null:
-                Result = new PromptResult(isSuccess: false, string.Empty, key.ConsoleKeyInfo);
-                break;
+            //case (Control, C) when selection is null:
+            //    Result = new PromptResult(isSuccess: false, string.Empty, key.ConsoleKeyInfo);
+            //    break;
             case (Control, L):
                 TopCoordinate = 0; // actually clearing the screen is handled in the renderer.
                 break;

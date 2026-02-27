@@ -4,18 +4,18 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 using PrettyPrompt;
 using PrettyPrompt.Consoles;
 using PrettyPrompt.Tests;
-
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using static System.ConsoleKey;
 using static System.ConsoleModifiers;
 
@@ -95,6 +95,9 @@ public class PromptBenchmark
     //don't use NSubstite as in unit tests because it's slow
     private class BenchConsole : IConsole
     {
+        public CancellationTokenSource ReadKeyCancellationTokenSource { get; set; } = new CancellationTokenSource();
+
+
         private readonly ConsoleKeyInfo[] keys;
         private int keyIndex;
 

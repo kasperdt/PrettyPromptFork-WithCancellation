@@ -37,6 +37,10 @@ internal static class Program
                 // cancel long-running processing of their response via ctrl-c
                 Console.WriteLine("You wrote " + (response.SubmitKeyInfo.Modifiers.HasFlag(ConsoleModifiers.Control) ? response.Text.ToUpper() : response.Text));
             }
+            else
+            {
+                break;  
+            }
         }
     }
 

@@ -6,14 +6,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PrettyPrompt.Consoles;
 
 [DebuggerDisplay("{ObjectPattern}")]
 public class KeyPress
 {
+    //public static bool IsCtrlC { get; set; }
+
     /// <summary>
     /// The key press as reported by Console.ReadKey
     /// </summary>
@@ -57,11 +63,56 @@ public class KeyPress
         PastedText = pastedText;
     }
 
-    internal static IEnumerable<KeyPress> ReadForever(IConsole console)
+    //internal static CancellationTokenSource? ReadKeyCancellationTokenSource { get; set; }
+    
+    internal static async Task<ConsoleKeyInfo> ReadKeyAsync(bool intercept = true, CancellationToken ct = default)
+    {
+        var c = 0;
+        while (true)
+        {
+            ct.ThrowIfCancellationRequested();
+            //if (ct.IsCancellationRequested)
+            //    return null;
+            if (Console.KeyAvailable)
+                return Console.ReadKey(intercept);
+            if (c++ < 5)
+                Thread.Sleep(1);
+            else if (c < 25)
+                Thread.Sleep(5);
+            else if (c < 40)
+                Thread.Sleep(20);
+            else if (c < 60)
+                Thread.Sleep(50);
+            else if (c < 70)
+                Thread.Sleep(100);
+            else if (c < 100)
+                Thread.Sleep(200);
+            else
+                while(true)
+                {
+                    Thread.Sleep(500);
+                    ct.ThrowIfCancellationRequested();
+                    if (Console.KeyAvailable)
+                        return Console.ReadKey(intercept);
+                }
+                
+        }
+    }
+    internal static async IAsyncEnumerable<KeyPress> ReadForeverAsync(IConsole console, [EnumeratorCancellation] CancellationToken ct = default)
     {
         while (true)
         {
-            var key = console.ReadKey(true);
+            //console.ReadKeyCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            //ConsoleCancelEventHandler del = (o, e) =>
+            //{
+            //    e.Cancel = true;
+            //    console.ReadKeyCancellationTokenSource.Cancel();
+            //};
+            ////console.CancelKeyPress += del;
+            var key = await ReadKeyAsync(true, ct).ConfigureAwait(false);
+            //console.CancelKeyPress -= del;
+            //if (mkey is not { } key)
+            //    break;
 
             if (!console.KeyAvailable)
             {

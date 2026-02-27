@@ -66,9 +66,11 @@ public static class Program
                 selectedCompletionItemBackground: AnsiColor.Rgb(30, 30, 30),
                 selectedTextBackground: AnsiColor.Rgb(20, 61, 102)));
 
+        PromptResult? last = null;
         while (true)
         {
             var response = await prompt.ReadLineAsync().ConfigureAwait(false);
+            last = response;
             if (response.IsSuccess)
             {
                 if (response.Text == "exit") break;

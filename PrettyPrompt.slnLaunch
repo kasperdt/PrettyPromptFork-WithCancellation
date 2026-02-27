@@ -1,0 +1,12 @@
+[
+  {
+    "Name": "Dev ",
+    "Projects": [
+      {
+        "Path": "ConsoleApp1\\ConsoleApp1.csproj",
+        "Action": "Start",
+        "DebugTarget": "Dev"
+      }
+    ]
+  }
+]

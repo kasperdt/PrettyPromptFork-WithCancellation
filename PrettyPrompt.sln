@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.32328.378
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11415.280 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrettyPrompt", "src\PrettyPrompt\PrettyPrompt.csproj", "{1F9726E2-DB89-4FD8-947A-F6CBFE885495}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrettyPrompt.Benchmarks", "tests\PrettyPrompt.Benchmarks\PrettyPrompt.Benchmarks.csproj", "{9C8B74CD-CD66-43DE-8B52-EEEEE91642C1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrettyPrompt.IntegrationTests", "tests\PrettyPrompt.IntegrationTests\PrettyPrompt.IntegrationTests.csproj", "{6619618C-1E36-4A3B-9154-77B5FF57A702}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{B5B3E99A-FF89-4D79-8324-0383E47F9A2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{6619618C-1E36-4A3B-9154-77B5FF57A702}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6619618C-1E36-4A3B-9154-77B5FF57A702}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6619618C-1E36-4A3B-9154-77B5FF57A702}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5B3E99A-FF89-4D79-8324-0383E47F9A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5B3E99A-FF89-4D79-8324-0383E47F9A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5B3E99A-FF89-4D79-8324-0383E47F9A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5B3E99A-FF89-4D79-8324-0383E47F9A2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

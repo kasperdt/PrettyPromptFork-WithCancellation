@@ -2,6 +2,7 @@
 using PrettyPrompt.Consoles;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace PrettyPrompt.Tests;
@@ -9,7 +10,7 @@ namespace PrettyPrompt.Tests;
 public class KeyPressTests
 {
     [Fact]
-    public void KeyPressKeys()
+    public async Task KeyPressKeys()
     {
         var console = ConsoleStub.NewConsole();
         var keys = new (FormattableString input, ConsoleKey expectedKey, ConsoleModifiers expectedModifier)[]
@@ -38,7 +39,7 @@ public class KeyPressTests
             .KeyAvailable
             .Returns(keyAvailableResult.First(), keyAvailableResult.Skip(1).ToArray());
 
-        var outputKeys = KeyPress.ReadForever(console).Take(keys.Length).ToArray();
+        var outputKeys = KeyPress.ReadForeverAsync(console).ToBlockingEnumerable().Take(keys.Length).ToArray();
         Assert.Equal(keys.Length, outputKeys.Length);
         foreach (var (expectedOutput, output) in keys.Zip(outputKeys))
         {

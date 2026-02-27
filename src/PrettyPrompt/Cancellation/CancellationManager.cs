@@ -18,7 +18,7 @@ internal sealed class CancellationManager
     public CancellationManager(IConsole console)
     {
         this.console = console;
-        this.console.CancelKeyPress += SignalCancellationToLastResult;
+        //this.console.CancelKeyPress += SignalCancellationToLastResult;
     }
 
     internal void CaptureControlC()

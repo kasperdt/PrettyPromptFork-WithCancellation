@@ -4,11 +4,6 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using PrettyPrompt.Cancellation;
 using PrettyPrompt.Consoles;
 using PrettyPrompt.Highlighting;
@@ -16,7 +11,13 @@ using PrettyPrompt.History;
 using PrettyPrompt.Panes;
 using PrettyPrompt.Rendering;
 using PrettyPrompt.TextSelection;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using TextCopy;
+using static PrettyPrompt.Highlighting.FormattedString.TextElementsEnumerator;
 
 namespace PrettyPrompt;
 
@@ -32,8 +33,20 @@ public sealed class Prompt : IPrompt, IAsyncDisposable
     private readonly IPromptCallbacks promptCallbacks;
     private Task? savePersistentHistoryTask;
 
+
+
+    //public Prompt(IOption<PromptOptions> options) : this(
+    //    options?.PersistentHistoryFilepath,
+    //    options?.Callbacks,
+    //    options?.Console,
+    //    options?.Configuration)
+    //{
+
+    //}
+
+
     /// <summary>
-    /// Instantiates a prompt object. This object can be re-used for multiple invocations of <see cref="ReadLineAsync()"/>.
+    /// Instantiates a prompt object. This object can be re-used for multiple invocations of <see cref="ReadLineAsync"/>.
     /// </summary>
     /// <param name="persistentHistoryFilepath">The filepath of where to store history entries. If null, persistent history is disabled.</param>
     /// <param name="callbacks">A collection of callbacks for modifying and intercepting the prompt's behavior</param>
@@ -57,8 +70,8 @@ public sealed class Prompt : IPrompt, IAsyncDisposable
         this.highlighter = new SyntaxHighlighter(promptCallbacks, PromptConfiguration.HasUserOptedOutFromColor);
     }
 
-    /// <inheritdoc cref="IPrompt.ReadLineAsync()" />
-    public async Task<PromptResult> ReadLineAsync()
+    /// <inheritdoc cref="IPrompt.ReadLineAsync" />
+    public async Task<PromptResult> ReadLineAsync(CancellationToken ct = default)
     {
         using var renderer = new Renderer(console, configuration);
 
@@ -81,9 +94,9 @@ public sealed class Prompt : IPrompt, IAsyncDisposable
         codePane.Bind(completionPane, overloadPane);
 
         history.Track(codePane);
-        cancellationManager.CaptureControlC();
+        //cancellationManager.CaptureControlC();
 
-        foreach (var key in KeyPress.ReadForever(console))
+        await foreach (var key in KeyPress.ReadForeverAsync(console, ct).ConfigureAwait(false).WithCancellation(ct))
         {
             // grab the code area width every key press, so we rerender appropriately when the console is resized.
             codePane.MeasureConsole();
@@ -98,6 +111,9 @@ public sealed class Prompt : IPrompt, IAsyncDisposable
 
             // the key press may have caused the prompt to return its input (e.g. <Enter>) or fired a configured callback.
             var result = await HandleKeyPressAction(codePane, key, inputText, cancellationToken: default).ConfigureAwait(false);
+            var mspan = codePane.GetSelectionSpan();
+            console.CaptureControlC = mspan is { } span && !span.IsEmpty;
+            
 
             switch(result)
             {
@@ -107,9 +123,8 @@ public sealed class Prompt : IPrompt, IAsyncDisposable
                     break;
                 // if a configured callback results in streaming input -- consume the completion to asynchronously update the screen.
                 case StreamingInputCallbackResult customCompletion:
-                    completionPane.IsOpen = false;
                     overloadPane.IsOpen = false;
-                    var updates = codePane.Document.InsertAtCaretAsync(codePane, customCompletion.StreamingInput).GetAsyncEnumerator();
+                    var updates = codePane.Document.InsertAtCaretAsync(codePane, customCompletion.StreamingInput).GetAsyncEnumerator(ct);
                     while(await updates.MoveNextAsync().ConfigureAwait(false))
                     {
                         await RenderSyntaxHighlightedOutput(renderer, codePane, overloadPane, completionPane, key, codePane.Document.GetText(), null).ConfigureAwait(false);
@@ -127,8 +142,13 @@ public sealed class Prompt : IPrompt, IAsyncDisposable
             }
         }
 
-        Debug.Assert(false, "Should never reach here due to infinite " + nameof(KeyPress.ReadForever));
-        return null;
+        //Debug.Assert(false, "Should never reach here due to infinite " + nameof(KeyPress.ReadForeverAsync));
+        //var res = new PromptResult(isSuccess: false, text: string.Empty, submitKeyInfo: default) { CancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(ct) };
+        //cancellationManager.AllowControlCToCancelResult(res);
+        //return res;
+        ct.ThrowIfCancellationRequested();
+        throw new UnreachableException();
+        //return null!;
 
         async Task InterpretKeyPress(KeyPress key, CancellationToken cancellationToken)
         {
@@ -236,7 +256,7 @@ public interface IPrompt
     /// Prompts the user for input and returns the result.
     /// </summary>
     /// <returns>The input that the user submitted</returns>
-    Task<PromptResult> ReadLineAsync();
+    Task<PromptResult> ReadLineAsync(CancellationToken ct = default);
 }
 
 /// <summary>
