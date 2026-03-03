@@ -32,7 +32,6 @@ public class SyntaxHighlightingTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal("red green nocolor blue", result.Text);
         var output = console.GetAllOutput();
 
@@ -79,7 +78,6 @@ public class SyntaxHighlightingTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal("苹果 o 蓝莓 o avocado o", result.Text);
         var output = console.GetAllOutput();
 

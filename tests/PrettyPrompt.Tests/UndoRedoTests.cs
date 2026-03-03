@@ -30,7 +30,6 @@ public class UndoRedoTests
         );
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("", result.Text);
     }
 
@@ -45,7 +44,6 @@ public class UndoRedoTests
         );
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("", result.Text);
 
         //---------------------------------------------
@@ -59,7 +57,6 @@ public class UndoRedoTests
         );
         prompt = new Prompt(console: console);
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("a", result.Text);
 
         var outputs = console.GetAllOutput();
@@ -79,7 +76,6 @@ public class UndoRedoTests
         );
         prompt = new Prompt(console: console);
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("a", result.Text);
 
 
@@ -96,7 +92,6 @@ public class UndoRedoTests
         );
         prompt = new Prompt(console: console);
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("a", result.Text);
     }
 
@@ -112,7 +107,6 @@ public class UndoRedoTests
         );
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("ab", result.Text);
 
         //---------------------------------------------
@@ -128,7 +122,6 @@ public class UndoRedoTests
         );
         prompt = new Prompt(console: console);
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("", result.Text);
 
         //---------------------------------------------
@@ -146,7 +139,6 @@ public class UndoRedoTests
         );
         prompt = new Prompt(console: console);
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("ab", result.Text);
 
         //---------------------------------------------
@@ -166,7 +158,6 @@ public class UndoRedoTests
         );
         prompt = new Prompt(console: console);
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("abcd", result.Text);
 
         //---------------------------------------------
@@ -187,7 +178,6 @@ public class UndoRedoTests
         );
         prompt = new Prompt(console: console);
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("abcd", result.Text);
 
         //---------------------------------------------
@@ -209,7 +199,6 @@ public class UndoRedoTests
         );
         prompt = new Prompt(console: console);
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("abcd", result.Text);
     }
 
@@ -229,7 +218,6 @@ public class UndoRedoTests
         );
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("", result.Text);
 
         var outputs = console.GetAllOutput();
@@ -255,7 +243,6 @@ public class UndoRedoTests
         );
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("abcd", result.Text);
 
         //---------------------------------------------
@@ -273,7 +260,6 @@ public class UndoRedoTests
             );
             prompt = new Prompt(console: console);
             result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("abcd", result.Text);
         }
     }
@@ -295,7 +281,6 @@ public class UndoRedoTests
             console.StubInput(inputs.ToArray());
             var prompt = new Prompt(console: console);
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("abcd"[..(4 - i)] + "|", result.Text);
         }
 
@@ -314,7 +299,6 @@ public class UndoRedoTests
             console.StubInput(inputs.ToArray());
             var prompt = new Prompt(console: console);
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("abcd".Insert(4 - i, "|"), result.Text);
         }
 
@@ -333,7 +317,6 @@ public class UndoRedoTests
                 $"{Enter}");
             var prompt = new Prompt(console: console);
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("a|d", result.Text);
         }
 
@@ -358,7 +341,6 @@ public class UndoRedoTests
                 $"{Enter}");
             var prompt = new Prompt(console: console);
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("a|d", result.Text);
         }
     }
@@ -381,7 +363,6 @@ public class UndoRedoTests
         );
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("abcd", result.Text);
     }
 
@@ -401,7 +382,6 @@ public class UndoRedoTests
                 $"{Enter}");
             var prompt = new Prompt(console: console);
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("", result.Text);
         }
     }

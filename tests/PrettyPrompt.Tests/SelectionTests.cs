@@ -27,7 +27,6 @@ public class SelectionTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal("The quick brown fox jumped over the enigmatic giraffe", result.Text);
     }
 
@@ -40,7 +39,6 @@ public class SelectionTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal("bonk", result.Text);
     }
 
@@ -60,7 +58,6 @@ public class SelectionTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal("I am soup!", result.Text);
     }
 
@@ -85,7 +82,6 @@ public class SelectionTests
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal("There once was rain!", result.Text);
     }
 
@@ -102,7 +98,6 @@ public class SelectionTests
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal("It's a small world, after all", result.Text);
     }
 
@@ -120,7 +115,6 @@ public class SelectionTests
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal("It's a world, after all", result.Text);
     }
 
@@ -138,7 +132,6 @@ public class SelectionTests
             var prompt = new Prompt(console: console);
             var result = await prompt.ReadLineAsync();
 
-            Assert.True(result.IsSuccess);
             Assert.Equal("baby shark doo doo doo doo", result.Text);
         }
     }
@@ -157,7 +150,6 @@ public class SelectionTests
             var prompt = new Prompt(console: console);
             var result = await prompt.ReadLineAsync();
 
-            Assert.True(result.IsSuccess);
             Assert.Equal("doo doo doo doo baby shark", result.Text);
         }
     }
@@ -173,7 +165,6 @@ public class SelectionTests
             $"{Shift}{Home}{Delete}{Enter}"
         );
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("", result.Text);
 
 
@@ -183,7 +174,6 @@ public class SelectionTests
             $"{LeftArrow}{Shift}{LeftArrow}{Delete}{Enter}"
         );
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("abd", result.Text);
 
 
@@ -193,7 +183,6 @@ public class SelectionTests
             $"{LeftArrow}{Shift}{LeftArrow}{Shift}{LeftArrow}{Delete}{Enter}"
         );
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("ad", result.Text);
 
 
@@ -203,7 +192,6 @@ public class SelectionTests
             $"{LeftArrow}{Shift}{Home}{Delete}{Enter}"
         );
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("d", result.Text);
     }
 
@@ -218,7 +206,6 @@ public class SelectionTests
             $"{Home}{Shift}{End}{Delete}{Enter}"
         );
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("", result.Text);
 
 
@@ -228,7 +215,6 @@ public class SelectionTests
             $"{Home}{RightArrow}{Shift}{RightArrow}{Delete}{Enter}"
         );
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("acd", result.Text);
 
 
@@ -238,7 +224,6 @@ public class SelectionTests
             $"{Home}{RightArrow}{Shift}{RightArrow}{Shift}{RightArrow}{Delete}{Enter}"
         );
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("ad", result.Text);
 
 
@@ -248,7 +233,6 @@ public class SelectionTests
             $"{Home}{RightArrow}{Shift}{End}{Delete}{Enter}"
         );
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("a", result.Text);
     }
 
@@ -263,7 +247,6 @@ public class SelectionTests
             $"{LeftArrow}{LeftArrow}{Shift}{UpArrow}{Delete}{Enter}"
         );
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("abgh", result.Text);
     }
 
@@ -278,7 +261,6 @@ public class SelectionTests
             $"{Control}{Home}{RightArrow}{RightArrow}{Shift}{DownArrow}{Delete}{Enter}"
         );
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("abgh", result.Text);
     }
 
@@ -304,7 +286,6 @@ public class SelectionTests
         {
             console.StubInput(input, $"{Delete}{Enter}");
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("", result.Text);
         }
     }
@@ -321,7 +302,6 @@ public class SelectionTests
             $"{Shift}{LeftArrow}{Shift}{RightArrow}X{Enter}"
         );
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("abXcd", result.Text);
 
 
@@ -332,7 +312,6 @@ public class SelectionTests
             $"{Shift}{LeftArrow}{Shift}{LeftArrow}{Shift}{RightArrow}{Shift}{RightArrow}X{Enter}"
         );
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("abXcd", result.Text);
 
 
@@ -343,7 +322,6 @@ public class SelectionTests
             $"{Shift}{LeftArrow}{Shift}{RightArrow}{Shift}{RightArrow}{Delete}{Enter}"
         );
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("abd", result.Text);
 
 
@@ -354,7 +332,6 @@ public class SelectionTests
             $"{Shift}{RightArrow}{Shift}{RightArrow}{Shift}{Home}{Delete}{Enter}"
         );
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("cd", result.Text);
 
 
@@ -365,7 +342,6 @@ public class SelectionTests
             $"{Shift}{RightArrow}{Shift}{LeftArrow}{Shift}{LeftArrow}{Delete}{Enter}"
         );
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("acd", result.Text);
 
 
@@ -376,7 +352,6 @@ public class SelectionTests
             $"{Shift}{LeftArrow}{Shift}{LeftArrow}{Shift}{End}{Delete}{Enter}"
         );
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("ab", result.Text);
     }
 
@@ -390,7 +365,6 @@ public class SelectionTests
             $"{Shift}{Home}{Delete}{Enter}" //select first 4 spaces and delete them
         );
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("abcd", result.Text);
     }
 
@@ -409,7 +383,6 @@ public class SelectionTests
 
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
 
         var output = console.GetAllOutput();
         var indexOfOutputWithSelection = output.Select((o, i) => (o, i)).First(t => t.o.Contains("[39;49;7m")).i; //reset + reverse
@@ -431,7 +404,6 @@ public class SelectionTests
             $"{Enter}"
         );
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         var outputs = console.GetAllOutput();
         Assert.Equal("a", outputs[2]);
         Assert.Equal("\u001b[1D\u001b[39;49;7ma\u001b[0m\u001b[1D", outputs[3]); //move left, rewrite 'a' with reverse colors, reset, move left
@@ -456,7 +428,6 @@ public class SelectionTests
 
             var prompt = new Prompt(console: console);
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("x", result.Text);
         }
     }
@@ -472,7 +443,6 @@ public class SelectionTests
         var prompt = new Prompt(console: console);
         console.StubInput($"abcdefg{Control}{A}{Tab}{Enter}");
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal(PromptTests.DefaultTabSpaces, result.Text);
 
         //replace by Paste (shorter text)
@@ -483,7 +453,6 @@ public class SelectionTests
             prompt = new Prompt(console: console);
             console.StubInput($"abcdefg{Control}{A}{Control}{V}{Enter}");
             result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("ab", result.Text);
         }
 
@@ -495,7 +464,6 @@ public class SelectionTests
             prompt = new Prompt(console: console);
             console.StubInput($"abcdefg{Control}{A}{Control}{V}{Enter}");
             result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("1234567890", result.Text);
         }
     }
@@ -528,7 +496,6 @@ public class SelectionTests
                 console.StubInput(input.ToArray());
 
                 var result = await prompt.ReadLineAsync();
-                Assert.True(result.IsSuccess);
 
                 var expectedResult =
                     text[selectionStart + selectionLength - 1] == '\n' ?
@@ -557,7 +524,6 @@ public class SelectionTests
                 console.StubInput(input.ToArray());
 
                 var result = await prompt.ReadLineAsync();
-                Assert.True(result.IsSuccess);
 
                 var expectedResult =
                     text[selectionStart + selectionLength - 1] == '\n' ?
@@ -595,7 +561,6 @@ public class SelectionTests
                 console.StubInput(input.ToArray());
 
                 var result = await prompt.ReadLineAsync();
-                Assert.True(result.IsSuccess);
 
                 var expectedResult =
                     text[selectionStart + selectionLength - 1] == '\n' ?
@@ -624,7 +589,6 @@ public class SelectionTests
                 console.StubInput(input.ToArray());
 
                 var result = await prompt.ReadLineAsync();
-                Assert.True(result.IsSuccess);
 
                 var expectedResult =
                     text[selectionStart + selectionLength - 1] == '\n' ?
@@ -660,7 +624,6 @@ public class SelectionTests
         console.StubInput(input.ToArray());
 
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         if (writeOverFinalSelection)
         {
             Assert.Equal($"X", result.Text.Replace("\r", ""));
@@ -697,7 +660,6 @@ public class SelectionTests
         console.StubInput(input.ToArray());
 
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         if (writeOverFinalSelection)
         {
             Assert.Equal($"X", result.Text.Replace("\r", ""));

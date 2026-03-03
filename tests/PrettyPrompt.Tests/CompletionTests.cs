@@ -28,7 +28,6 @@ public class CompletionTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal("Aardvark", result.Text);
     }
 
@@ -43,7 +42,6 @@ public class CompletionTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal("Aardvark Zebra Alligator", result.Text);
     }
 
@@ -57,7 +55,6 @@ public class CompletionTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal($"Aardvark{NewLine}Zebra", result.Text);
     }
 
@@ -71,7 +68,6 @@ public class CompletionTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal($"Aardvark{NewLine}Zebra", result.Text);
     }
 
@@ -85,14 +81,12 @@ public class CompletionTests
         console.StubInput($"A{Escape}{Enter}"); // it will auto-open when we press A (see previous test)
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal($"A", result.Text);
 
         // Home key (among others) should close menu
         console.StubInput($"A{Home}{Enter}");
         var result2 = await prompt.ReadLineAsync();
 
-        Assert.True(result2.IsSuccess);
         Assert.Equal($"A", result2.Text);
     }
 
@@ -109,7 +103,6 @@ public class CompletionTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal($"Zebra", result.Text);
 
         console.StubInput(
@@ -120,7 +113,6 @@ public class CompletionTests
         );
 
         var result2 = await prompt.ReadLineAsync();
-        Assert.True(result2.IsSuccess);
         Assert.Equal($"Aardvark", result2.Text);
     }
 
@@ -134,7 +126,6 @@ public class CompletionTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal($"Aardvark Aardvark", result.Text);
     }
 
@@ -148,7 +139,6 @@ public class CompletionTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal($"Aardvark", result.Text);
     }
 
@@ -162,7 +152,6 @@ public class CompletionTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal($"Aardvark a", result.Text);
     }
 
@@ -176,7 +165,6 @@ public class CompletionTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal($"Aardvark Q", result.Text);
     }
 
@@ -196,8 +184,6 @@ public class CompletionTests
         var prompt = ConfigurePrompt(console);
 
         var result = await prompt.ReadLineAsync();
-
-        Assert.True(result.IsSuccess);
 
         var output = console.GetAllOutput();
         var indexOfOutputWithCompletionPane = output.Select((o, i) => (o, i)).First(t => t.o.Contains("┌───────────")).i;
@@ -223,7 +209,6 @@ public class CompletionTests
             console.StubInput(input.ToArray());
             var prompt = ConfigurePrompt(console, completions: new[] { Text.ToUpper() });
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal(Text.ToUpper(), result.Text);
         }
     }
@@ -243,7 +228,6 @@ public class CompletionTests
             $"{Enter}");
         var prompt = ConfigurePrompt(console, completions: new[] { "aaa" });
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("abc", result.Text);
     }
 
@@ -272,7 +256,6 @@ public class CompletionTests
             console.StubInput(input.ToArray());
             var prompt = ConfigurePrompt(console, completions: new[] { MainWord.ToUpper() });
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("abc DEFGH ijk", result.Text);
         }
     }
@@ -294,7 +277,6 @@ public class CompletionTests
             $"{Enter}");
         var prompt = ConfigurePrompt(console, completions: new[] { "abcd" }, configuration: spacebarIsNotCommitCharacterCfg);
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("ab ", result.Text);
 
         //------------------------------------------
@@ -310,7 +292,6 @@ public class CompletionTests
             $"{Enter}");
         prompt = ConfigurePrompt(console, completions: new[] { "abcd" }, configuration: spacebarIsCommitCharacterCfg);
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("abcd ", result.Text);
     }
 
@@ -337,7 +318,6 @@ public class CompletionTests
                             new(Enter), new(Tab), new(' '), new('.'), new('(')))
                     ));
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal($"abcd{commitChar}", result.Text);
         }
 
@@ -358,7 +338,6 @@ public class CompletionTests
                             new(Enter), new(Tab), new(' '), new('.'), new('(')))
                     ));
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal($"abcd", result.Text);
         }
     }
@@ -381,7 +360,6 @@ public class CompletionTests
             console,
             completions: new[] { "aaa", "bbb" });
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal($"aaa", result.Text);
     }
 
@@ -401,7 +379,6 @@ public class CompletionTests
             console,
             completions: new[] { "aaa", "bbb" });
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal($"aaa.", result.Text);
     }
 
@@ -420,7 +397,6 @@ public class CompletionTests
                 $"{Enter}"); //submit prompt
             var prompt = ConfigurePrompt(console, completions: new[] { "abc", "defg", "hij" });
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("abc defg hij", result.Text);
         }
     }
@@ -447,7 +423,6 @@ public class CompletionTests
                     new(Enter), new(Tab), new(' '), new('.'), new('(')))
             ));
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal($"aaa.bbb", result.Text);
     }
 
@@ -473,7 +448,6 @@ public class CompletionTests
                     new(Enter), new(Tab), new(' '), new('.'), new('(')))
             ));
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal($"DateTime.Now", result.Text);
     }
 
@@ -506,7 +480,6 @@ public class CompletionTests
             console.StubInput($"{input}{Enter}{Enter}");
             var prompt = ConfigurePrompt(console, completions: new[] { "int", "string", "StringBuilder" });
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal(expectedOutput, result.Text);
         }
     }
@@ -528,7 +501,6 @@ public class CompletionTests
                     new(Enter), new('.')))
             ));
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("ab", result.Text);
 
         ////////////////////////////////////////////////////
@@ -544,7 +516,6 @@ public class CompletionTests
                    new(Enter), new('.')))
            ));
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("ab.", result.Text);
     }
 
@@ -562,7 +533,6 @@ public class CompletionTests
                 console,
                 completions: new[] { "111", "222", "333" });
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("111", result.Text);
 
             //////////////////////////////////////////////////////
@@ -573,7 +543,6 @@ public class CompletionTests
                console,
                completions: new[] { "111", "222", "333" });
             result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("222", result.Text);
 
             //////////////////////////////////////////////////////
@@ -584,7 +553,6 @@ public class CompletionTests
                console,
                completions: new[] { "111", "222", "333" });
             result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("111", result.Text);
 
             //////////////////////////////////////////////////////
@@ -595,7 +563,6 @@ public class CompletionTests
                console,
                completions: new[] { "111", "222", "333" });
             result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
             Assert.Equal("ab", result.Text);
         }
     }
@@ -612,7 +579,6 @@ public class CompletionTests
             console,
             completions: new[] { "111", "222", "333" });
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("111", result.Text);
 
         //////////////////////////////////////////////////////
@@ -623,7 +589,6 @@ public class CompletionTests
             console,
             completions: new[] { "111", "222", "333" });
         result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("222", result.Text);
     }
 
@@ -648,7 +613,6 @@ public class CompletionTests
             $"{Escape}", //close completion list
             $"{Enter}"); //submit prompt
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("a", result.Text);
     }
 
@@ -674,7 +638,6 @@ public class CompletionTests
             $"{Enter}", //should insert item (bug was that new line was inserted instead)
             $"{Control}{Enter}"); //submit prompt
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("aaa", result.Text);
     }
 

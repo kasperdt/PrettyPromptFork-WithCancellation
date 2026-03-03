@@ -30,17 +30,10 @@ internal static class Program
         while (true)
         {
             var response = await prompt.ReadLineAsync().ConfigureAwait(false);
-            if (response.IsSuccess)
-            {
-                if (response.Text == "exit") break;
-                // optionally, use response.CancellationToken so the user can
-                // cancel long-running processing of their response via ctrl-c
-                Console.WriteLine("You wrote " + (response.SubmitKeyInfo.Modifiers.HasFlag(ConsoleModifiers.Control) ? response.Text.ToUpper() : response.Text));
-            }
-            else
-            {
-                break;  
-            }
+            if (response.Text == "exit") break;
+            // optionally, use response.CancellationToken so the user can
+            // cancel long-running processing of their response via ctrl-c
+            Console.WriteLine("You wrote " + (response.SubmitKeyInfo.Modifiers.HasFlag(ConsoleModifiers.Control) ? response.Text.ToUpper() : response.Text));
         }
     }
 

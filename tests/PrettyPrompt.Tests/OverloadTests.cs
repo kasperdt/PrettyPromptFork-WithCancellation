@@ -28,7 +28,6 @@ public class OverloadTests
             $"{DownArrow}{DownArrow}{UpArrow}", // navigate through overload list
             $"){Enter}"); //submit prompt
         var result = await prompt.ReadLineAsync();
-        Assert.True(result.IsSuccess);
         Assert.Equal("ant()", result.Text);
     }
 }

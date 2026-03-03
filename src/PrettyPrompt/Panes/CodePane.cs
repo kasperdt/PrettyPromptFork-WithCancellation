@@ -159,7 +159,7 @@ internal class CodePane : IKeyPressHandler
                 Document.InsertAtCaret(this, '\n');
                 break;
             case var _ when configuration.KeyBindings.SubmitPrompt.Matches(key.ConsoleKeyInfo):
-                Result = new PromptResult(isSuccess: true, Document.GetText().EnvironmentNewlines(), key.ConsoleKeyInfo);
+                Result = new PromptResult(Document.GetText().EnvironmentNewlines(), key.ConsoleKeyInfo);
                 break;
             case Home or (Shift, Home):
                 Document.MoveToLineBoundary(-1);

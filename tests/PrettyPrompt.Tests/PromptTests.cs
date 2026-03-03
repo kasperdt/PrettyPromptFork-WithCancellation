@@ -32,7 +32,6 @@ public class PromptTests
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal("Hello World", result.Text);
     }
 
@@ -45,7 +44,6 @@ public class PromptTests
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal(Control, result.SubmitKeyInfo.Modifiers);
         Assert.Equal(Enter, result.SubmitKeyInfo.Key);
         Assert.Equal("Hello World", result.Text);
@@ -68,7 +66,6 @@ public class PromptTests
 
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal("  ", result.Text);
     }
 
@@ -81,7 +78,6 @@ public class PromptTests
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
 
-        Assert.False(result.IsSuccess);
         Assert.Empty(result.Text);
     }
 
@@ -95,7 +91,6 @@ public class PromptTests
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal("111222333", result.Text);
 
         var finalOutput = console.GetFinalOutput();
@@ -168,7 +163,6 @@ public class PromptTests
         var prompt = new Prompt(console: console);
         var result = await prompt.ReadLineAsync();
 
-        Assert.True(result.IsSuccess);
         Assert.Equal($"abc{NewLine}x", result.Text);
     }
 
@@ -354,7 +348,7 @@ public class PromptTests
             console.StubInput($"{Control}{V}{Enter}");
             var prompt = new Prompt(console: console);
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
+   
             Assert.Equal(Text, result.Text);
         }
     }
@@ -374,7 +368,7 @@ public class PromptTests
             console.StubInput($"{Control}{V}{Enter}");
             var prompt = new Prompt(console: console);
             var result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
+   
             Assert.Equal($"{DefaultTabSpaces}a", result.Text);
 
             ////////////////////////////////////////////////
@@ -384,7 +378,7 @@ public class PromptTests
             console.StubInput($"{Control}{V}{Enter}");
             prompt = new Prompt(console: console);
             result = await prompt.ReadLineAsync();
-            Assert.True(result.IsSuccess);
+   
             Assert.Equal($"{NewLine}{NewLine}", result.Text);
         }
     }
@@ -446,7 +440,7 @@ public class PromptTests
                 console.StubInput(input.ToArray());
                 var prompt = new Prompt(console: console);
                 var result = await prompt.ReadLineAsync();
-                Assert.True(result.IsSuccess);
+       
                 Assert.Equal($"z", result.Text);
                 if (cutKeyPress.GetArgument(1) is X)
                 {
@@ -473,7 +467,7 @@ public class PromptTests
                     console.StubInput(input.ToArray());
                     var prompt = new Prompt(console: console);
                     var result = await prompt.ReadLineAsync();
-                    Assert.True(result.IsSuccess);
+           
                     if (upArrowCount == 0)
                     {
                         Assert.Equal(Enumerable.Repeat(NewLine, lineCount).Aggregate((a, b) => a + b), result.Text);
@@ -530,7 +524,7 @@ public class PromptTests
                     console.StubInput(input.ToArray());
                     var prompt = new Prompt(console: console);
                     var result = await prompt.ReadLineAsync();
-                    Assert.True(result.IsSuccess);
+           
                     Assert.Equal(output, result.Text);
                     if (upArrowCount > 0)
                     {

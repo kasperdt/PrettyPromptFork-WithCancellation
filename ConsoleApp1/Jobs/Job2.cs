@@ -1,13 +1,14 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿
+
 using PrettyPrompt;
-using PrettyPrompt.Consoles;
 using PrettyPrompt.Highlighting;
+using PrettyPrompt.Consoles;
+using PrettyPromptRepl;
 
-namespace ConsoleApp1;
+namespace ConsoleApp1.Jobs;
 
-public class Job() : ReplService(new Prompt("./history-file", configuration: new(prompt: "--> ")))
+public class Job2(IPrompt prompt) : ReplService(prompt)
 {
-
     protected override FormattedString? Salutation => "Welcome!";
 
     protected override async Task OnResponseAsync(ConsoleKeyInfo submitKeyInfo, string text, CancellationToken stoppingToken)
@@ -17,3 +18,4 @@ public class Job() : ReplService(new Prompt("./history-file", configuration: new
 
     protected override FormattedString? Valediction => "Goodbye!";
 }
+

@@ -4,7 +4,6 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 #endregion
 
-using PrettyPrompt.Cancellation;
 using PrettyPrompt.Consoles;
 using PrettyPrompt.Highlighting;
 using PrettyPrompt.History;
@@ -27,7 +26,6 @@ public sealed class Prompt : IPrompt, IAsyncDisposable
     private readonly IConsole console;
     private readonly HistoryLog history;
     private readonly PromptConfiguration configuration;
-    private readonly CancellationManager cancellationManager;
     private readonly IClipboard clipboard;
     private readonly SyntaxHighlighter highlighter;
     private readonly IPromptCallbacks promptCallbacks;
@@ -63,7 +61,6 @@ public sealed class Prompt : IPrompt, IAsyncDisposable
 
         this.configuration = configuration ?? new PromptConfiguration();
         this.history = new HistoryLog(persistentHistoryFilepath, this.configuration.KeyBindings);
-        this.cancellationManager = new CancellationManager(this.console);
         this.clipboard = (console is IConsoleWithClipboard consoleWithClipboard) ? consoleWithClipboard.Clipboard : new WrappedClipboard();
 
         promptCallbacks = callbacks ?? new PromptCallbacks();
@@ -136,7 +133,6 @@ public sealed class Prompt : IPrompt, IAsyncDisposable
                     //wait for potential previous saving
                     await (savePersistentHistoryTask ?? Task.CompletedTask).ConfigureAwait(false);
                     savePersistentHistoryTask = history.SavePersistentHistoryAsync(inputText);
-                    cancellationManager.AllowControlCToCancelResult(result);
                     // return the result to caller. The current prompt has ended.
                     return result;
             }
@@ -266,8 +262,6 @@ public interface IPrompt
 /// </summary>
 public class PromptResult
 {
-    public bool IsSuccess { get; }
-
     /// <summary>
     /// The current input on the prompt when the user submited the prompt or pressed the keybinding.
     /// </summary>
@@ -275,17 +269,8 @@ public class PromptResult
 
     public ConsoleKeyInfo SubmitKeyInfo { get; }
 
-    internal CancellationTokenSource? CancellationTokenSource { get; set; }
-
-    /// <summary>
-    /// If your user presses ctrl-c while your application is processing the user's input, this CancellationToken will be
-    /// signaled (i.e. IsCancellationRequested will be set to true)
-    /// </summary>
-    public CancellationToken CancellationToken => CancellationTokenSource?.Token ?? CancellationToken.None;
-
-    public PromptResult(bool isSuccess, string text, ConsoleKeyInfo submitKeyInfo)
+    public PromptResult(string text, ConsoleKeyInfo submitKeyInfo)
     {
-        IsSuccess = isSuccess;
         Text = text;
         SubmitKeyInfo = submitKeyInfo;
     }
@@ -302,7 +287,7 @@ public class KeyPressCallbackResult : PromptResult
     public string? Output { get; }
 
     public KeyPressCallbackResult(string input, string? output)
-        : base(isSuccess: true, input, submitKeyInfo: default)
+        : base(input, submitKeyInfo: default)
     {
         Output = output;
     }

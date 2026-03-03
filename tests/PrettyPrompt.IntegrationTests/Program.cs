@@ -71,13 +71,12 @@ public static class Program
         {
             var response = await prompt.ReadLineAsync().ConfigureAwait(false);
             last = response;
-            if (response.IsSuccess)
-            {
-                if (response.Text == "exit") break;
-                // optionally, use response.CancellationToken so the user can
-                // cancel long-running processing of their response via ctrl-c
-                console.WriteLine("You wrote " + (response.SubmitKeyInfo.Modifiers.HasFlag(ConsoleModifiers.Control) ? response.Text.ToUpper() : response.Text));
-            }
+      
+            if (response.Text == "exit") break;
+            // optionally, use response.CancellationToken so the user can
+            // cancel long-running processing of their response via ctrl-c
+            console.WriteLine("You wrote " + (response.SubmitKeyInfo.Modifiers.HasFlag(ConsoleModifiers.Control) ? response.Text.ToUpper() : response.Text));
+            
         }
     }
 }
